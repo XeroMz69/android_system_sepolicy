@@ -566,7 +566,6 @@ compatible_property_only(`
 
 neverallow { domain -init } aac_drc_prop:property_service set;
 neverallow { domain -init } build_prop:property_service set;
-neverallow { domain -init } userdebug_or_eng_prop:property_service set;
 
 # Do not allow reading device's serial number from system properties except form
 # a few allowed domains.

@@ -52,6 +52,12 @@ get_prop(appdomain, persist_wm_debug_prop)
 get_prop(appdomain, device_config_runtime_native_prop)
 get_prop(appdomain, device_config_runtime_native_boot_prop)
 
+# Allow to read ro.vendor.camera.extensions.enabled
+get_prop(appdomain, camera2_extensions_prop)
+
+# Allow to ro.camerax.extensions.enabled
+get_prop(appdomain, camerax_extensions_prop)
+
 userdebug_or_eng(`perfetto_producer({ appdomain })')
 
 # Allow the heap dump ART plugin to the count of sessions waiting for OOME
@@ -111,6 +117,9 @@ get_prop(appdomain, camera_calibration_prop)
 
 # Allow to read db.log.detailed, db.log.slow_query_threshold*
 get_prop(appdomain, sqlite_log_prop)
+
+# Allow to read system_user_mode_emulation_prop, which is used by UserManager.java
+userdebug_or_eng(`get_prop(appdomain, system_user_mode_emulation_prop)')
 
 # Allow font file read by apps.
 allow appdomain font_data_file:file r_file_perms;
@@ -348,7 +357,7 @@ unix_socket_send(appdomain, statsdw, statsd)
 
 # Write profiles /data/misc/profiles
 allow appdomain user_profile_root_file:dir search;
-allow appdomain user_profile_data_file:dir { search write add_name };
+allow appdomain user_profile_data_file:dir w_dir_perms;
 allow appdomain user_profile_data_file:file create_file_perms;
 
 # Send heap dumps to system_server via an already open file descriptor

@@ -45,8 +45,10 @@ set_prop(system_app, exported_bluetooth_prop)
 set_prop(system_app, exported_system_prop)
 set_prop(system_app, exported3_system_prop)
 set_prop(system_app, gesture_prop)
+set_prop(system_app, locale_prop)
 set_prop(system_app, logd_prop)
 set_prop(system_app, net_radio_prop)
+set_prop(system_app, timezone_prop)
 set_prop(system_app, usb_control_prop)
 set_prop(system_app, usb_prop)
 set_prop(system_app, log_tag_prop)
@@ -88,7 +90,6 @@ allow system_app {
   -dnsresolver_service
   -dumpstate_service
   -installd_service
-  -iorapd_service
   -lpdump_service
   -mdns_service
   -netd_service
@@ -104,7 +105,6 @@ dontaudit system_app {
   dnsresolver_service
   dumpstate_service
   installd_service
-  iorapd_service
   mdns_service
   netd_service
   virtual_touchpad_service
@@ -113,6 +113,9 @@ dontaudit system_app {
 
 # suppress denials caused by debugfs_tracing
 dontaudit system_app debugfs_tracing:file rw_file_perms;
+
+# Ignore access to zram when Debug.getMemInfo is called.
+dontaudit system_app sysfs_zram:dir search;
 
 allow system_app keystore:keystore_key {
     get_state
